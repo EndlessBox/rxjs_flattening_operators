@@ -9,6 +9,7 @@ import {
 } from 'rxjs/operators';
 
 const letters = of('a', 'b', 'c');
+
 const resultSw = letters.pipe(
   switchMap(x => {
     return interval(3526).pipe(map(ticks => x + ticks));
@@ -33,4 +34,7 @@ const resultEx = letters.pipe(
   })
 );
 
+resultSw.subscribe(console.log);
+resultCn.subscribe(console.log);
 resultMr.subscribe(console.log);
+resultEx.subscribe(console.log);
