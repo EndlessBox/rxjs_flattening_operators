@@ -1,20 +1,36 @@
 import { of, interval } from 'rxjs';
-import { mergeMap, map, switchMap, concatMap, timeout } from 'rxjs/operators';
+import {
+  mergeMap,
+  map,
+  switchMap,
+  exhaustMap,
+  concatMap,
+  timeout
+} from 'rxjs/operators';
 
 const letters = of('a', 'b', 'c');
-const result = letters.pipe(
-  concatMap(x => {
-    timeout(2000).pipe(tap(data => letters =))
-    return interval(4000).pipe(map(ticks => x + ticks));
+const resultSw = letters.pipe(
+  switchMap(x => {
+    return interval(3526).pipe(map(ticks => x + ticks));
   })
 );
-result.subscribe(x => console.log(x));
 
-// Results in the following:
-// a0
-// b0
-// c0
-// a1
-// b1
-// c1
-// continues to list a,b,c with respective ascending integers
+const resultCn = letters.pipe(
+  concatMap(x => {
+    return interval(5846).pipe(map(ticks => x + ticks));
+  })
+);
+
+const resultMr = letters.pipe(
+  mergeMap(x => {
+    return interval(2541).pipe(map(ticks => x + ticks));
+  })
+);
+
+const resultEx = letters.pipe(
+  exhaustMap(x => {
+    return interval(5235).pipe(map(ticks => x + ticks));
+  })
+);
+
+resultMr.subscribe(console.log);
